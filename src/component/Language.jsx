@@ -1,16 +1,20 @@
 import React from "react";
 import { languages } from "../languages";
 
-const Language = () => {
+const Language = (props) => {
   return (
     <div className="language-container">
-      {languages.map((sinlglelang) => {
+      {languages.map((sinlglelang, index) => {
         const Style = {
           backgroundColor: sinlglelang.backgroundColor,
           color: sinlglelang.color,
         };
         return (
-          <span className="chip" style={Style} key={sinlglelang.name}>
+          <span
+            className={`chip ${props.wrongGuessedCount > index ? "lost" : ""}`}
+            style={Style}
+            key={sinlglelang.name}
+          >
             {sinlglelang.name}
           </span>
         );

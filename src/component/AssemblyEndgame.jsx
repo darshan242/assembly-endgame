@@ -13,11 +13,15 @@ const AssemblyEndgame = () => {
     );
   }
   console.log(guessedLetter);
+  const wrongGuessedArray = guessedLetter.filter(
+    (letter) => !currentWord.includes(letter)
+  );
+  const wrongGuessedCount = wrongGuessedArray.length;
 
   return (
     <>
       <Status></Status>
-      <Language></Language>
+      <Language wrongGuessedCount={wrongGuessedCount}></Language>
       <InputWord word={currentWord} guessedLetter={guessedLetter}></InputWord>
       <Keyboard
         addGuessedLetter={addGuessedLetter}
