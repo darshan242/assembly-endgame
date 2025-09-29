@@ -18,8 +18,12 @@ const AssemblyEndgame = () => {
     <>
       <Status></Status>
       <Language></Language>
-      <InputWord word={currentWord}></InputWord>
-      <Keyboard addGuessedLetter={addGuessedLetter}></Keyboard>
+      <InputWord word={currentWord} guessedLetter={guessedLetter}></InputWord>
+      <Keyboard
+        addGuessedLetter={addGuessedLetter}
+        guessedLetter={guessedLetter}
+        currentWord={currentWord}
+      ></Keyboard>
       <button className="new-game">New Game</button>
     </>
   );
