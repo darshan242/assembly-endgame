@@ -18,14 +18,28 @@ const AssemblyEndgame = () => {
 
     return [guessedLetter.word, guessedLetter.hint];
   }
+
+  function getRandomLettersFromWord(word) {
+    const wordLetters = word.split('');
+    const uniqueLetters = [...new Set(wordLetters)]; // Remove duplicates
+    
+    // Randomly choose 1 or 2 letters
+    const numLettersToReveal = Math.random() < 0.5 ? 1 : 2;
+    const numLetters = Math.min(numLettersToReveal, uniqueLetters.length);
+    
+    // Shuffle and pick random letters
+    const shuffled = [...uniqueLetters].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, numLetters);
+  }
   // Get a single random word and hint pair
   const initialWordData = getRandomWord();
+  const initialRevealedLetters = getRandomLettersFromWord(initialWordData[0]);
   const [currentWord, setCurrentWord] = useState(initialWordData[0]);
   const [currentWordHint, setCurrentWordHint] = useState(initialWordData[1]);
   // console.log(currentWord);
   // console.log(currentWordHint);
 
-  const [guessedLetter, setGuessedLetter] = useState([]);
+  const [guessedLetter, setGuessedLetter] = useState(initialRevealedLetters);
 
   function addGuessedLetter(letter) {
     setGuessedLetter((prevLetter) =>
@@ -59,9 +73,10 @@ const AssemblyEndgame = () => {
   });
   function newGameClick() {
     const newWordData = getRandomWord();
+    const newRevealedLetters = getRandomLettersFromWord(newWordData[0]);
     setCurrentWord(newWordData[0]);
     setCurrentWordHint(newWordData[1]);
-    setGuessedLetter([]);
+    setGuessedLetter(newRevealedLetters);
   }
 
   return (
