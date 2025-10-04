@@ -3,6 +3,7 @@ import Status from "./Status";
 import Language from "./Language";
 import InputWord from "./InputWord";
 import Keyboard from "./Keyboard";
+import clsx from "clsx";
 
 const AssemblyEndgame = () => {
   const [currentWord, setCurrentWord] = useState("react");
@@ -12,15 +13,29 @@ const AssemblyEndgame = () => {
       prevLetter.includes(letter) ? prevLetter : [...prevLetter, letter]
     );
   }
-  console.log(guessedLetter);
   const wrongGuessedArray = guessedLetter.filter(
     (letter) => !currentWord.includes(letter)
   );
   const wrongGuessedCount = wrongGuessedArray.length;
+  const isGameWon = currentWord
+    .split("")
+    .every((letter) => guessedLetter.includes(letter));
+
+  const isGameEnd = wrongGuessedCount >= 8;
+  const isGameOver = isGameEnd || isGameWon;
+
+  const gameStatusClass = clsx("game-status", {
+    won: isGameWon,
+    lost: isGameEnd,
+  });
 
   return (
     <>
-      <Status></Status>
+      <Status
+        isGameOver={isGameOver}
+        isGameWon={isGameWon}
+        gameStatusClass={gameStatusClass}
+      ></Status>
       <Language wrongGuessedCount={wrongGuessedCount}></Language>
       <InputWord word={currentWord} guessedLetter={guessedLetter}></InputWord>
       <Keyboard
@@ -28,7 +43,7 @@ const AssemblyEndgame = () => {
         guessedLetter={guessedLetter}
         currentWord={currentWord}
       ></Keyboard>
-      <button className="new-game">New Game</button>
+      {isGameOver && <button className="new-game">New Game</button>}
     </>
   );
 };
