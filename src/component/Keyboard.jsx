@@ -22,6 +22,7 @@ const Keyboard = (props) => {
           <button
             onClick={() => props.addGuessedLetter(singleAlphabet)}
             key={index}
+            disabled={props.isGameOver}
             className={className}
           >
             {singleAlphabet.toUpperCase()}

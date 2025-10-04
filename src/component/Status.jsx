@@ -1,8 +1,9 @@
 import React from "react";
-
+import { languages } from "../languages";
+import { getFarewellText } from "../utils";
 const Status = (props) => {
   return (
-    <section className={props.gameStatusClass}>
+    <section aria-live="polite" role="status" className={props.gameStatusClass}>
       {props.isGameOver ? (
         props.isGameWon ? (
           <>
@@ -15,6 +16,10 @@ const Status = (props) => {
             <p>You lose! Better start learning Assembly 😭</p>
           </>
         )
+      ) : props.isLastGuessIncorrect ? (
+        <p className="farewell-message">
+          {getFarewellText(languages[props.wrongGuessedCount - 1].name)}
+        </p>
       ) : null}
     </section>
   );
