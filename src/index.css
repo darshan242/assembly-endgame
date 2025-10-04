@@ -207,7 +207,21 @@ span.chip.lost::before {
   margin-inline: auto;
   margin-bottom: 20px;
   gap: 8px;
-  transition: background-color 0.3s;
+  animation: expand-contract 1s ease infinite;
+}
+@keyframes expand-contract {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Expand */
+  }
+  100% {
+    transform: scale(1); /* Contract back */
+  }
+}
+.a-none {
+  animation: none !important;
 }
 
 .hint-button:hover {
@@ -216,4 +230,13 @@ span.chip.lost::before {
 
 .hint-button:focus {
   outline: none;
+}
+p.hint {
+  display: none;
+  width: fit-content;
+  margin-inline: auto;
+  color: #fcba29;
+}
+p.d-block {
+  display: block;
 }

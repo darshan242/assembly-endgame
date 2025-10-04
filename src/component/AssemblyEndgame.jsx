@@ -10,11 +10,21 @@ import { wordsWithHints } from "../wordsWithHints";
 
 const AssemblyEndgame = () => {
   function getRandomWord() {
-    let guessLetter = words[Math.ceil(Math.random() * words.length)];
+    // let guessLetter = words[Math.ceil(Math.random() * words.length)];
+    let guessedLetter =
+      wordsWithHints[Math.ceil(Math.random() * wordsWithHints.length)];
+    console.log(guessedLetter.word);
+    console.log(guessedLetter.hint);
 
-    return guessLetter;
+    return [guessedLetter.word, guessedLetter.hint];
   }
-  const [currentWord, setCurrentWord] = useState(() => getRandomWord());
+  // Get a single random word and hint pair
+  const initialWordData = getRandomWord();
+  const [currentWord, setCurrentWord] = useState(initialWordData[0]);
+  const [currentWordHint, setCurrentWordHint] = useState(initialWordData[1]);
+  // console.log(currentWord);
+  // console.log(currentWordHint);
+
   const [guessedLetter, setGuessedLetter] = useState([]);
 
   function addGuessedLetter(letter) {
@@ -48,7 +58,9 @@ const AssemblyEndgame = () => {
     farewell: !isGameOver && isLastGuessIncorrect,
   });
   function newGameClick() {
-    setCurrentWord(getRandomWord());
+    const newWordData = getRandomWord();
+    setCurrentWord(newWordData[0]);
+    setCurrentWordHint(newWordData[1]);
     setGuessedLetter([]);
   }
 
@@ -68,6 +80,26 @@ const AssemblyEndgame = () => {
         guessedLetter={guessedLetter}
         isGameEnd={isGameEnd}
       ></InputWord>
+      <>
+        {wrongGuessedCount > 3 && (
+          <>
+            <button
+              className="hint-button"
+              onClick={() => {
+                document.querySelector(".hint-button").classList.add("a-none");
+                document.querySelector(".hint").classList.add("d-block");
+              }}
+            >
+              🤔 <span>Need a Hint?</span>
+            </button>
+            <p className="hint">{`Hint :- ${currentWordHint
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")}`}</p>
+          </>
+        )}
+      </>
       <Keyboard
         addGuessedLetter={addGuessedLetter}
         guessedLetter={guessedLetter}
