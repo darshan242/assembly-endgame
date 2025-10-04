@@ -114,7 +114,7 @@ div.word > span {
   border-bottom: 1px solid #f9f4da;
 }
 
-section.word > span.missed-letter {
+div.word > span.missed-letter {
   color: #ec5d49;
 }
 

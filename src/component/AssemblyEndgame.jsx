@@ -5,10 +5,16 @@ import InputWord from "./InputWord";
 import Keyboard from "./Keyboard";
 import clsx from "clsx";
 import ConfettiCustom from "./ConfettiCustom";
+import { words } from "../words";
 
 const AssemblyEndgame = () => {
-  const [currentWord, setCurrentWord] = useState("react");
+  function getRandomWord() {
+    let guessLetter = words[Math.ceil(Math.random() * words.length)];
+    return guessLetter;
+  }
+  const [currentWord, setCurrentWord] = useState(() => getRandomWord());
   const [guessedLetter, setGuessedLetter] = useState([]);
+
   function addGuessedLetter(letter) {
     setGuessedLetter((prevLetter) =>
       prevLetter.includes(letter) ? prevLetter : [...prevLetter, letter]
@@ -39,6 +45,10 @@ const AssemblyEndgame = () => {
     lost: isGameEnd,
     farewell: !isGameOver && isLastGuessIncorrect,
   });
+  function newGameClick() {
+    setCurrentWord(getRandomWord());
+    setGuessedLetter([]);
+  }
 
   return (
     <>
@@ -51,14 +61,22 @@ const AssemblyEndgame = () => {
         wrongGuessedCount={wrongGuessedCount}
       ></Status>
       <Language wrongGuessedCount={wrongGuessedCount}></Language>
-      <InputWord word={currentWord} guessedLetter={guessedLetter}></InputWord>
+      <InputWord
+        word={currentWord}
+        guessedLetter={guessedLetter}
+        isGameEnd={isGameEnd}
+      ></InputWord>
       <Keyboard
         addGuessedLetter={addGuessedLetter}
         guessedLetter={guessedLetter}
         currentWord={currentWord}
         isGameOver={isGameOver}
       ></Keyboard>
-      {isGameOver && <button className="new-game">New Game</button>}
+      {isGameOver && (
+        <button className="new-game" onClick={newGameClick}>
+          New Game
+        </button>
+      )}
     </>
   );
 };
