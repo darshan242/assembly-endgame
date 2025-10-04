@@ -193,3 +193,27 @@ span.chip.lost::before {
   gap: 10px;
   margin-bottom: 36px;
 }
+.hint-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-inline: auto;
+  margin-bottom: 20px;
+  gap: 8px;
+  transition: background-color 0.3s;
+}
+
+.hint-button:hover {
+  background-color: #45a049;
+}
+
+.hint-button:focus {
+  outline: none;
+}

@@ -6,10 +6,12 @@ import Keyboard from "./Keyboard";
 import clsx from "clsx";
 import ConfettiCustom from "./ConfettiCustom";
 import { words } from "../words";
+import { wordsWithHints } from "../wordsWithHints";
 
 const AssemblyEndgame = () => {
   function getRandomWord() {
     let guessLetter = words[Math.ceil(Math.random() * words.length)];
+
     return guessLetter;
   }
   const [currentWord, setCurrentWord] = useState(() => getRandomWord());
